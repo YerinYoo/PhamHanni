@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bunnies.infra.member.MemberDao">
+
+    <resultMap id="resultMapObj" type="com.bunnies.infra.member.MemberDto"></resultMap>
+	
+	<!-- member 테이블에서 select문을 사용할 때 공통적으로 사용되는 구문 / 검색 포함 -->
+	<sql id="selectCommonMember">
+		FROM member a
+		WHERE 1=1
+		<if test="voDelNY != null and !voDelNY.equals('')">AND a.memberDelNY = #{voDelNY}</if>
+
+		<choose>
+			<when test="voOptionDate == 1">AND a.memberRegDate BETWEEN #{voDateStart} AND
+				#{voDateEnd}</when>
+			<when test="voOptionDate == 2">AND a.memberModDate BETWEEN #{voDateStart} AND
+				#{voDateEnd}</when>
+		</choose>
+
+		<choose>
+			<when test="voOption == 1">AND a.memberSeq = #{voValue}</when>
+			<when test="voOption == 2">AND a.memberName LIKE CONCAT('%',#{voValue},'%')</when>
+			<when test="voOption == 3">AND a.memberID LIKE CONCAT('%',#{voValue},'%')</when>
+			<when test="voOption == 4">AND a.memberEmail LIKE CONCAT('%',#{voValue},'%')</when>
+			<when test="voOption == 5">AND a.memberPhone LIKE CONCAT('%',#{voValue},'%')</when>
+		</choose>
+	</sql>
+
+	<!-- member에 해당하는 데이터 개수 반환 쿼리 -->
+	<select id="selectCountMember" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommonMember" />
+	</select>
+	
+	<!-- 리스트 반환 쿼리 -->
+	<!-- 페이지네이션 처리가 된 리스트를 반환하는 쿼리 -->
+	<select id="selectListWithPaging" resultMap="resultMapObj">
+		<include refid="base.selectListUpperForMysql" />
+		select
+			a.memberSeq
+			,a.memberID
+			,a.memberPWD
+			,a.memberGenderCD
+			,a.memberGradeCD
+			,a.memberEmail
+			,a.memberPhone
+			,a.managerNY
+			,a.foreignerNY
+			,a.memberFirstName
+			,a.memberLastName
+			,a.memberNickName
+			,a.memberDelNY
+			,a.memberRegDate
+			,a.memberModDate
+		<include refid="selectCommonCode" />
+		ORDER BY a.memberSeq desc, a.memberFirstName, a.memberSeq
+		<include refid="base.selectListLowerForMysql" />
+	</select>
+
+	
+	<!-- 페이지네이션 처리를 거치지 않은 리스트 반환 -->
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+		select
+			memberSeq
+			,memberID
+			,memberPWD
+			,memberGenderCD
+			,memberGradeCD
+			,memberEmail
+			,memberPhone
+			,managerNY
+			,foreignerNY
+			,memberFirstName
+			,memberLastName
+			,memberNickName
+			,memberDelNY
+			,memberRegDate
+			,memberModDate
+		where 1=1
+		AND memberDelNY=0
+	</select>
+
+	<!-- 리스트 중 셀렉된 한 가지 데이터 반환 -->
+	<select id="selectOne" resultMap="resultMapObj">
+		select
+			memberSeq
+			,memberID
+			,memberPWD
+			,memberGenderCD
+			,memberGradeCD
+			,memberEmail
+			,memberPhone
+			,managerNY
+			,foreignerNY
+			,memberFirstName
+			,memberLastName
+			,memberNickName
+			,memberDelNY
+			,memberRegDate
+			,memberModDate
+		from member
+		where 1=1
+		and memberSeq=#{memberSeq}
+	</select>
+
+	<!-- 메서드 관련 쿼리 정의 -->
+	<insert id="insert">
+		insert into member(
+			memberID
+			,memberPWD
+			,memberGenderCD
+			,memberGradeCD
+			,memberEmail
+			,memberPhone
+			,managerNY
+			,foreignerNY
+			,memberFirstName
+			,memberLastName
+			,memberNickName
+			,memberDelNY
+			,memberRegDate
+			,memberModDate
+		)values(
+			#{memberID}
+			,#{memberPWD}
+			,#{memberGenderCD}
+			,4 <!-- memberGradeCD == 4 / new member -->
+			,#{memberEmail}
+			,#{memberPhone}
+			,0 <!-- managerNY == 0 / 일반 회원 가입이기 때문에 매니저 권한 부여할 수 없음 -->
+			,#{foreignerNY}
+			,#{memberFirstName}
+			,#{memberLastName}
+			,#{memberNickName}
+			,0 <!-- delNY == 0 / 회원 가입 시 탈퇴 여부 선택하지 않기 때문에 기본 값으로 0 부여 -->
+			,now()
+			,now()
+		)
+
+		<selectKey resultType="String" keyProperty="memberSeq"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="updateBasicInfo">
+		UPDATE member
+		SET
+		memberGenderCD=#{memberGenderCD}
+		, memberEmail=#{memberEmail}
+		, memberPhone=#{memberPhone}
+		, foreignerNY=#{foreignerNY}
+		, memberFirstName=#{memberFirstName}
+		, memberLastName=#{memberLastName}
+		, memberModDate=now()
+		where 1=1
+		and memberSeq=#{memberSeq}
+	</update>
+	
+	<update id="updatePWD">
+		update member
+		set
+			memberPWD=#{memberPWD}
+			,memberModDate=now()
+		where 1=1
+		and memberSeq=#{memberSeq}
+	</update>
+	
+	<update id="updateNickName">
+		update member
+		set
+			memberNickName=#{memberNickName}
+			,memberModDat=now()
+		where 1=1
+		and memberSeq=#{memberSeq}
+	</update>
+
+	<update id="uelete">
+		update member
+		set
+		memberDelNY=1
+		where 1=1
+		and memberSeq = #{memberSeq}
+	</update>
+
+	<delete id="delete">
+		delete From member
+		where 1=1
+		and memberSeq=#{memberSeq}
+	</delete>
+
+	<!-- 다른 페이지에서 멤버 정보 불러오기-->
+	<select id="selectMemberListOnAnotherPage" resultMap="resultMapObj">
+		select
+			a.memberSeq,
+			a.memberName,
+			a.memberID,
+			a.memberEmail
+			
+		from
+			member a
+		where 1=1
+		and a.memberDelNY=0
+		order by a.memberSeq desc
+	</select>
+
+  </mapper>

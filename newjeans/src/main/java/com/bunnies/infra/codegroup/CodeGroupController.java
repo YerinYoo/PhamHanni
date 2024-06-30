@@ -1,0 +1,11 @@
+package com.bunnies.infra.codegroup;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class CodeGroupController {
+
+	@Autowired
+	private CodeGroupService service;
+}

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bunnies.infra.codegroup.CodeGroupDao">
+
+    <resultMap id="resultMapObj" type="com.bunnies.infra.codegroup.CodeGroupDto"></resultMap>
+	
+	<!-- 검색 시 사용할 수 있는 공통 구문 -->
+	<sql id="selectCommonCodeGroup">
+		FROM codegroup a
+		WHERE 1=1
+			<if test="voDelNY != null and !voDelNY.equals('')">AND a.codegroupDelNY = #{voDelNY}</if>
+			
+		<choose>
+			<when test="voOptionDate == 1">AND a.codegroupRegDate BETWEEN #{voDateStart} AND #{voDateEnd}</when>
+			<when test="voOptionDate == 2">AND a.codegroupModDate BETWEEN #{voDateStart} AND #{voDateEnd}</when>
+		</choose>
+
+		<choose>
+			<when test="voOption == 1">AND a.codegroupSeq = #{voValue}</when>
+			<when test="voOption == 2">AND a.codegroupName LIKE CONCAT('%',#{voValue},'%')</when>
+		</choose>
+	</sql>
+	
+	<!-- codegroup 테이블에 해당하는 데이터 총 개수 반환 쿼리 -->
+	<select id="selectCount" resultType="Integer">
+		SELECT COUNT(*)
+			<include refid="selectCommonCodeGroup" />
+	</select>
+	
+	<!-- codegroup List 반환 쿼리들 -->
+	<!-- 페이지네이션 없이 리스트 반환 -->
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+		select 
+		codegroupSeq,
+		codegroupName,
+		from codegroup
+		where 1=1
+			AND codegroupDelNY=0
+	</select>
+	
+	<!-- 페이지네이션이 적용된 리스트 반환 -->
+	<select id="selectListWithPaging"  resultMap="resultMapObj">
+			<include refid="base.selectListUpperForMysql" />
+			SELECT
+				  a.codegroupSeq
+			    , a.codegroupName
+				, a.codegroupDelNY
+				, a.codegroupRegDate
+				, a.codegroupModDate
+			<include refid="selectCommonCodeGroup" />
+			
+			ORDER BY a.codegroupSeq asc, a.codegroupName, a.codegroupSeq
+			<include refid="base.selectListLowerForMysql" />
+	
+	</select>
+	
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		select
+		codegroupSeq
+		,codegroupName
+		,codegroupRegDate
+		,codegroupModDate
+		,codegroupDelNY
+		from
+		codegroup
+		where 1=1
+		and codegroupSeq = #{codegroupSeq}
+	</select>
+
+	<insert id="insert">
+		insert into codegroup(
+		codegroupName
+		,codegroupDelNY
+		,codegroupRegDate
+		,codegroupModDate
+		)values(
+		#{codegroupName}
+		,0
+		,now()
+		,now()
+		);
+
+<!--  값이 들어가는 순간 해당 시퀀스 값을 반환하여 , 이후에 다시 데이터를 추가한 페이지를 보기위함 -->
+		<selectKey resultType="String" keyProperty="codegroupSeq"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+
+	<update id="update">
+		UPDATE codegroup
+		SET
+		codegroupName = #{codegroupName}
+		,codegroupModDate = now()
+		where
+		1=1
+		and codegroupSeq = #{codegroupSeq}
+	</update>
+
+	<update id="uelete">
+		UPDATE codegroup
+		SET
+		codegroupDelNY=1
+		where 1=1
+		and codegroupSeq=#{codegroupSeq}
+	</update>
+
+	<delete id="delete">
+		Delete from codegroup
+		where 1=1
+		and codegroupSeq = #{codegroupSeq}
+	</delete>
+	
+  </mapper>

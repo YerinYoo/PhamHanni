@@ -1,0 +1,73 @@
+-- insert into CodeGroup
+
+INSERT INTO `ditto`.`codegroup`
+(
+`codegroupName`,
+`codegroupRegDate`,
+`codegroupModDate`,
+`codegroupDelNY`
+) VALUES (
+'Gender',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`codegroup`
+(
+`codegroupName`,
+`codegroupRegDate`,
+`codegroupModDate`,
+`codegroupDelNY`
+) VALUES (
+'Grade',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`codegroup`
+(
+`codegroupName`,
+`codegroupRegDate`,
+`codegroupModDate`,
+`codegroupDelNY`
+) VALUES (
+'Category Of Artists',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`codegroup`
+(
+`codegroupName`,
+`codegroupRegDate`,
+`codegroupModDate`,
+`codegroupDelNY`
+) VALUES (
+'Category Of Albums',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`codegroup`
+(
+`codegroupName`,
+`codegroupRegDate`,
+`codegroupModDate`,
+`codegroupDelNY`
+) VALUES (
+'Added Into',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`codegroup`
+(
+`codegroupName`,
+`codegroupRegDate`,
+`codegroupModDate`,
+`codegroupDelNY`
+) VALUES (
+'Payments',
+now(),
+now(),
+0);

@@ -1,0 +1,370 @@
+-- insert into Code
+-- codegroupSeq == 1 / Gender
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+1,
+'Male',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+1,
+'Female',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+1,
+'etc',
+now(),
+now(),
+0);
+
+-- codegroupSeq == 2 / Grade
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+2,
+'New Member',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+2,
+'Bronze Member',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+2,
+'Silver Member',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+2,
+'Gold Member',
+now(),
+now(),
+0);
+
+-- codegroupSeq == 3 / Category Of Artists
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+3,
+'Singer-songwriter',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+3,
+'Band',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+3,
+'Producer',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+3,
+'DJ',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+3,
+'Rapper',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+3,
+'Group',
+now(),
+now(),
+0);
+
+-- codegroupSeq == 4 / Category Of Albums
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'Pop',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'Rock',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'Hip-Hop / Rap',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'R&B / Soul',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'Electronic / Dance',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'Jazz',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'Classical',
+now(),
+now(),
+0);
+
+-- codegroupSeq == 5 / Added Into
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+5,
+'Artist',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+5,
+'Album',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+4,
+'Song',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+5,
+'Playlist',
+now(),
+now(),
+0);
+
+-- codegroupSeq == 6 / payments
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+6,
+'Credit Card',
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`code`
+(
+`codegroupSeqF`,
+`codeName`,
+`codeRegDate`,
+`codeModDate`,
+`codeDelNY`
+ ) VALUES(
+6,
+'Kakao Pay',
+now(),
+now(),
+0);

@@ -1,0 +1,214 @@
+-- 대략적인 테이블 구조에 대한 설명
+-- 모든 테이블은 '테이블명' + 'Seq, RegDate, ModDate, DelNY'를 공통적으로 가짐
+-- Seq : PK키로 사용될 번호 값으로, 데이터를 insert 할 때 입력하지 않아도, 자동적으로 증가하도록 설정하고자 AI 키 부여
+-- RegDate, ModDate : 각각 등록일, 수정일을 의미. 데이터를 insert할 때에는 둘 다 now()로 입력이 되게 되고, 수정하게 될 경우에는 modDate만 now() 값이 들어가게 됨
+--                    regDate와 modDate를 비교하여 수정이 존재하였는지 없었는지를 판단.
+-- DelNY : 해당 데이터의 삭제 여부를 판가름하는 칼럼. 회원이 삭제를 하더라도, 실질적인 데이터베이스에서 삭제가 되는 것이 아닌 이 삭제 여부가 y 값으로 update되어 들어가게 되는 구조 (delete X, update O)
+
+CREATE TABLE `codegroup` (
+    `codegroupSeq` INT NOT NULL AUTO_INCREMENT,
+    `codegroupName` VARCHAR(45) NOT NULL,
+    `codegroupRegDate` DATE NOT NULL,
+    `codegroupModDate` DATE,
+    `codegroupDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`codegroupSeq`),
+    UNIQUE (`codegroupSeq`)
+);
+
+CREATE TABLE `code` (
+    `codeSeq` INT NOT NULL AUTO_INCREMENT,
+    `codegroupSeq` INT NOT NULL,
+    `codeName` VARCHAR(45) NOT NULL,
+    `codeRegDate` DATE NOT NULL,
+    `codeModDate` DATE,
+    `codeDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`codeSeq`),
+    UNIQUE (`codeSeq`),
+    FOREIGN KEY (`codegroupSeqF`) REFERENCES `codegroup`(`codegroupSeq`)
+);
+
+CREATE TABLE `member` (
+    `memberSeq` INT NOT NULL AUTO_INCREMENT,
+    `managerNY` BOOLEAN,
+    `memberID` VARCHAR(45) NOT NULL,
+    `memberPWD` VARCHAR(45) NOT NULL,
+    `memberFirstName` VARCHAR(10) NOT NULL,
+    `memberLastName` VARCHAR(10) NOT NULL,
+    `memberNickName` VARCHAR(10),
+    `memberEmail` VARCHAR(100),
+    `memberPhone` VARCHAR(45),
+    `memberRegDate` DATE NOT NULL,
+    `memberModDate` DATE,
+    `memberForeignNY` BOOLEAN,
+    `memberDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`memberSeq`),
+    UNIQUE (`memberSeq`)
+);
+
+CREATE TABLE `artist` (
+    `artistSeq` INT NOT NULL AUTO_INCREMENT,
+    `memberSeq` INT,
+    `artistName` VARCHAR(45) NOT NULL,
+    `artistDescription` VARCHAR(500),
+    `artistRegDT` DATE,
+    `artistEntertainment` VARCHAR(45),
+    `artistRegDate` DATE,
+    `artistModDate` DATE,
+    `artistDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`artistSeq`),
+    UNIQUE (`artistSeq`),
+    FOREIGN KEY (`memberSeq`) REFERENCES `member`(`memberSeq`)
+);
+
+CREATE TABLE `artistMsg` (
+    `artistMsgSeq` INT NOT NULL AUTO_INCREMENT,
+    `artistSeq` INT NOT NULL,
+    `artistMsg` VARCHAR(500) NOT NULL,
+    `artistMsgRegDate` DATE NOT NULL,
+    `artistMsgModDate` DATE,
+    `artistMsgDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`artistMsgSeq`),
+    UNIQUE (`artistMsgSeq`),
+    FOREIGN KEY (`artistSeq`) REFERENCES `artist`(`artistSeq`)
+);
+
+CREATE TABLE `artistImg` (
+    `artistImgSeq` INT NOT NULL AUTO_INCREMENT,
+    `artistSeq` INT NOT NULL,
+    `artistImgPath` VARCHAR(500) NOT NULL,
+    `artistImgRegDate` DATE NOT NULL,
+    `artistImgModDate` DATE,
+    `artistImgDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`artistImgSeq`),
+    UNIQUE (`artistImgSeq`),
+    FOREIGN KEY (`artistSeq`) REFERENCES `artist`(`artistSeq`)
+);
+
+CREATE TABLE `album` (
+    `albumSeq` INT NOT NULL AUTO_INCREMENT,
+    `albumName` VARCHAR(250) NOT NULL,
+    `artistSeq` INT NOT NULL,
+    `albumDescription` VARCHAR(2000),
+    `albumCoverPath` VARCHAR(500),
+    `albumCategory` INT NOT NULL,
+    `albumRegDate` DATE NOT NULL,
+    `albumModDate` DATE,
+    `albumDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`albumSeq`),
+    UNIQUE (`albumSeq`),
+    FOREIGN KEY (`artistSeq`) REFERENCES `artist`(`artistSeq`)
+);
+
+CREATE TABLE `song` (
+    `songSeq` INT NOT NULL AUTO_INCREMENT,
+    `songTitle` VARCHAR(100) NOT NULL,
+    `albumSeq` INT NOT NULL,
+    `artistSeq` INT NOT NULL,
+    `songLyrics` VARCHAR(8000),
+    `songComposer` VARCHAR(45),
+    `songWriter` VARCHAR(45),
+    `songArranger` VARCHAR(45),
+    `songRegDate` DATE,
+    `songModDate` DATE,
+    `songDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`songSeq`),
+    UNIQUE (`songSeq`),
+    FOREIGN KEY (`albumSeq`) REFERENCES `album`(`albumSeq`),
+    FOREIGN KEY (`artistSeq`) REFERENCES `artist`(`artistSeq`)
+);
+
+CREATE TABLE `playlist` (
+    `playlistSeq` INT NOT NULL AUTO_INCREMENT,
+    `memberSeq` INT NOT NULL,
+    `playlistName` VARCHAR(45) NOT NULL,
+    `playlistDescription` VARCHAR(250),
+    `playlistPath` VARCHAR(500),
+    `playlistOpenNY` BOOLEAN NOT NULL,
+    `playlistRegDate` DATE NOT NULL,
+    `playlistModDate` DATE,
+    `playlistDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`playlistSeq`),
+    UNIQUE (`playlistSeq`),
+    FOREIGN KEY (`memberSeq`) REFERENCES `member`(`memberSeq`)
+);
+
+CREATE TABLE `songInPlaylist` (
+    `songInPlaylistSeq` INT NOT NULL AUTO_INCREMENT,
+    `songSeq` INT NOT NULL,
+    `playlistSeq` INT NOT NULL,
+    `songInPlaylistRegDate` DATE NOT NULL,
+    `songInPlaylistModDate` DATE,
+    `songInPlaylistDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`songInPlaylistSeq`),
+    UNIQUE (`songInPlaylistSeq`),
+    FOREIGN KEY (`songSeq`) REFERENCES `song`(`songSeq`),
+    FOREIGN KEY (`playlistSeq`) REFERENCES `playlist`(`playlistSeq`)
+);
+
+CREATE TABLE `likes` (
+    `likesSeq` INT NOT NULL AUTO_INCREMENT,
+    `memberSeq` INT NOT NULL,
+    `likeToCD` INT NOT NULL,
+    `targetSeq` INT NOT NULL,
+    `likeRegDate` DATE NOT NULL,
+    `likeModDate` DATE,
+    `likeDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`likesSeq`),
+    UNIQUE (`likesSeq`),
+    FOREIGN KEY (`memberSeq`) REFERENCES `member`(`memberSeq`)
+);
+
+CREATE TABLE `command` (
+    `commandSeq` INT NOT NULL AUTO_INCREMENT,
+    `memberSeq` INT NOT NULL,
+    `commandTOCD` INT NOT NULL,
+    `targetSeq` INT NOT NULL,
+    `commandContent` VARCHAR(500),
+    `commandRegDate` DATE NOT NULL,
+    `commandDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`commandSeq`),
+    UNIQUE (`commandSeq`),
+    FOREIGN KEY (`memberSeq`) REFERENCES `member`(`memberSeq`)
+);
+
+CREATE TABLE `review` (
+    `reviewSeq` INT NOT NULL AUTO_INCREMENT,
+    `memberSeq` INT NOT NULL,
+    `reviewTOCD` INT NOT NULL,
+    `targetSeq` INT NOT NULL,
+    `reviewRate` DOUBLE NOT NULL,
+    `reviewContent` VARCHAR(500),
+    `reviewRegDate` DATE NOT NULL,
+    `reviewModDate` DATE,
+    `reviewDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`reviewSeq`),
+    UNIQUE (`reviewSeq`),
+    FOREIGN KEY (`memberSeq`) REFERENCES `member`(`memberSeq`)
+);
+
+CREATE TABLE `ticket` (
+    `ticketSeq` INT NOT NULL AUTO_INCREMENT,
+    `ticketName` VARCHAR(45) NOT NULL,
+    `ticketPrice` DOUBLE NOT NULL,
+    `ticketDiscountIncludeNY` BOOLEAN NOT NULL,
+    `ticketDescription` VARCHAR(500),
+    `ticketRegDate` DATE NOT NULL,
+    `ticketModDate` DATE,
+    `ticketDelNY` BOOLEAN NOT NULL,
+    PRIMARY KEY (`ticketSeq`),
+    UNIQUE (`ticketSeq`)
+);
+
+CREATE TABLE `memberHasTicket` (
+    `memberHasTktSeq` INT NOT NULL AUTO_INCREMENT,
+    `memberSeq` INT NOT NULL,
+    `ticketSeq` INT NOT NULL,
+    `memberHasTktRegDate` DATE NOT NULL,
+    `memberHasTktModDate` DATE,
+    `memberHasTktDelNY` BOOLEAN NOT NULL,
+    `paymentCD` INT NOT NULL,
+    PRIMARY KEY (`memberHasTktSeq`),
+    UNIQUE (`memberHasTktSeq`),
+    FOREIGN KEY (`memberSeq`) REFERENCES `member`(`memberSeq`),
+    FOREIGN KEY (`ticketSeq`) REFERENCES `ticket`(`ticketSeq`)
+);

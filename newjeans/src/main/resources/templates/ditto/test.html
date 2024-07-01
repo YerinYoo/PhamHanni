@@ -1,0 +1,63 @@
+<h3>CodeGroupTest _ List</h3>
+<table>
+	<tr>
+		<td>Seq</td>
+		<td>Name</td>
+		<td>RegDate</td>
+		<td>ModDate</td>
+		<td>DelNY</td>
+	</tr>
+	<tr th:each="list:${codegroup}">
+		<td th:text="${list.codegroupSeq}"></td>
+		<td th:text="${list.codegroupName}"></td>
+		<td th:text="${#dates.format(list.codegroupRegDate, 'yyyy-MM-dd')}"></td>
+		<td th:text="${#dates.format(list.codegroupModDate, 'yyyy-MM-dd')}"></td>
+		<td th:text="${list.codegroupDelNY}"></td>
+	</tr>
+</table>
+
+<h3>CodeTest _ List</h3>
+<table>
+	<tr>
+		<td>Seq</td>
+		<td>Name</td>
+		<td>CodeGroupSeqF</td>
+		<td>RegDate</td>
+		<td>ModDate</td>
+		<td>DelNY</td>
+	</tr>
+	<tr th:each="list:${code}">
+		<td th:text="${list.codeSeq}"></td>
+		<td th:text="${list.codeName}"></td>
+		<td th:text="${list.codegroupSeqF}"></td>
+		<td th:text="${#dates.format(list.codeRegDate, 'yyyy-MM-dd')}"></td>
+		<td th:text="${#dates.format(list.codeModDate, 'yyyy-MM-dd')}"></td>
+		<td th:text="${list.codeDelNY}"></td>
+	</tr>
+</table>
+
+<h3>MemberTest _ List</h3>
+<table>
+	<tr>
+		<td>Seq</td>
+		<td>ID</td>
+		<td>FirstName</td>
+		<td>LastName</td>
+		<td>ForeignerNY</td>
+		<td>Grade</td>
+		<td>RegDate</td>
+		<td>ModDate</td>
+		<td>DelNY</td>
+	</tr>
+	<tr th:each="list:${member}">
+		<td th:text="${list.memberSeq}"></td>
+		<td th:text="${list.memberID}"></td>
+		<td th:text="${list.memberFirstName}"></td>
+		<td th:text="${list.memberLastName}"></td>
+		<td th:text="${list.foreignerNY}"></td>
+		<td th:text="${list.memberGradeCD}"></td>
+		<td th:text="${#dates.format(list.memberRegDate, 'yyyy-MM-dd')}"></td>
+		<td th:text="${#dates.format(list.memberModDate, 'yyyy-MM-dd')}"></td>
+		<td th:text="${list.memberDelNY}"></td>
+	</tr>
+</table>

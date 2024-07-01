@@ -53,7 +53,7 @@
 			,a.memberDelNY
 			,a.memberRegDate
 			,a.memberModDate
-		<include refid="selectCommonCode" />
+		<include refid="selectCommonMember" />
 		ORDER BY a.memberSeq desc, a.memberFirstName, a.memberSeq
 		<include refid="base.selectListLowerForMysql" />
 	</select>
@@ -61,25 +61,27 @@
 	
 	<!-- 페이지네이션 처리를 거치지 않은 리스트 반환 -->
 	<select id="selectListWithoutPaging" resultMap="resultMapObj">
-		select
-			memberSeq
-			,memberID
-			,memberPWD
-			,memberGenderCD
-			,memberGradeCD
-			,memberEmail
-			,memberPhone
-			,managerNY
-			,foreignerNY
-			,memberFirstName
-			,memberLastName
-			,memberNickName
-			,memberDelNY
-			,memberRegDate
-			,memberModDate
-		where 1=1
-		AND memberDelNY=0
+	    select
+	    memberSeq,
+	    memberID,
+	    memberPWD,
+	    memberGenderCD,
+	    memberGradeCD,
+	    memberEmail,
+	    memberPhone,
+	    managerNY,
+	    foreignerNY,
+	    memberFirstName,
+	    memberLastName,
+	    memberNickName,
+	    memberDelNY,
+	    memberRegDate,
+	    memberModDate
+	    from member
+	    where 1=1
+	    AND memberDelNY=0
 	</select>
+
 
 	<!-- 리스트 중 셀렉된 한 가지 데이터 반환 -->
 	<select id="selectOne" resultMap="resultMapObj">

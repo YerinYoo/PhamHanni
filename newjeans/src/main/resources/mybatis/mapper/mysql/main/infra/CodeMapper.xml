@@ -44,21 +44,25 @@
 			,a.codeRegDate
 			,a.codeModDate
 		<include refid="selectCommonCode" />
-		ORDER BY a.codeSeq desc, a.codeName, a.codeSeq
+		ORDER BY a.codeSeq asc, a.codeName, a.codeSeq
 		<include refid="base.selectListLowerForMysql" />
 	</select>
 
 	
 	<!-- 페이지네이션 처리를 거치지 않은 리스트 반환 -->
 	<select id="selectListWithoutPaging" resultMap="resultMapObj">
-		select
-		codeSeq
-		,codeName
-		,codegroupSeqF
-		,codegroupName as CodeGroupName
-		where 1=1
-		AND codeDelNY=0
+	    select
+	    codeSeq,
+	    codeName,
+	    codeRegDate,
+	    codeModDate,
+	    codeDelNY,
+	    codegroupSeqF
+	    from code
+	    where 1=1
+	    AND codeDelNY=0
 	</select>
+
 
 	<!-- 리스트 중 셀렉된 한 가지 데이터 반환 -->
 	<select id="selectOne" resultMap="resultMapObj">
@@ -88,9 +92,8 @@
 		,now()
 		,now()
 		)
-
-		<selectKey resultType="String" keyProperty="codeSeq"
-			order="AFTER">
+		<!-- 값이 들어가는 순간 해당 시퀀스 값을 반환하여, 이후에 추가된 데이터의 View를 열람하기 위함 -->
+		<selectKey resultType="String" keyProperty="codeSeq" order="AFTER">
 			select last_insert_id()
 		</selectKey>
 	</insert>

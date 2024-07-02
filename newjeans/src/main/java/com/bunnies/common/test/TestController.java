@@ -26,6 +26,8 @@ public class TestController {
 	
 	@RequestMapping(value = "/Test")
 	public String test(CodeGroupDto dtoCg, CodeDto dtoC, MemberDto dtoM, Model model) throws Exception {
+		//예외처리를 명시하고자 throws Exception 사용
+		//IOException, SQLException 등의 명시적인 예외처리가 있지만, 전반적인 부분에 대해 예외처리를 진행하고자 Exception 사용
 
 
 			model.addAttribute("codegroup", cgService.selectListWithoutPaging() );

@@ -1,0 +1,193 @@
+-- insert into album (한 아티스트 당 3-5개 정도 insert)
+
+alter table album drop column albumDescription;
+alter table album drop column albumCategory;
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'City Lights - The 1st Mini Album',
+1,
+17,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/citylights.jpg',
+"2019-07-10",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'Delight - The 2nd Mini Album',
+1,
+17,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/delight.jpg',
+"2020-05-25",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'Bambi - The 3rd Mini Album',
+1,
+17,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/bambi.jpg',
+"2021-03-30",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'NewJeans 1st EP New Jeans',
+2,
+18,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/hypeboy.jpg',
+"2022-08-01",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'NewJeans OMG',
+2,
+18,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/omg.jpg',
+"2023-01-02",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'NewJeans 2nd EP Get Up',
+2,
+18,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/supershy.jpg',
+"2023-07-21",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'2023 League of Legends World Championship',
+2,
+18,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/gods.jpg',
+"2023-10-04",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'How Sweet',
+2,
+18,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/howsweet.jpg',
+"2024-05-24",
+now(),
+now(),
+0);
+
+INSERT INTO `ditto`.`album`
+(
+`albumName`,
+`artistSeqF`,
+`albumCategoryCD`,
+`albumCoverPath`,
+`albumReleaseDate`,
+`albumRegDate`,
+`albumModDate`,
+`albumDelNY`)
+VALUES
+(
+'Supernatural',
+2,
+18,
+'https://ditto-mediafiles.s3.ap-northeast-2.amazonaws.com/supernatural.jpg',
+"2024-06-21",
+now(),
+now(),
+0);

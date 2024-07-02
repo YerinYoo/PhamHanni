@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bunnies.infra.artist.ArtistDao">
+
+    <resultMap id="resultMapObj" type="com.bunnies.infra.artist.ArtistDto"></resultMap>
+	
+	<!-- 검색 시 사용할 수 있는 공통 구문 -->
+	<sql id="selectCommonArtist">
+		FROM artist a
+		WHERE 1=1
+			<if test="voDelNY != null and !voDelNY.equals('')">AND a.artistDelNY = #{voDelNY}</if>
+			
+		<choose>
+			<when test="voOptionDate == 1">AND a.artistRegDate BETWEEN #{voDateStart} AND #{voDateEnd}</when>
+			<when test="voOptionDate == 2">AND a.artistModDate BETWEEN #{voDateStart} AND #{voDateEnd}</when>
+		</choose>
+
+		<choose>
+			<when test="voOption == 1">AND a.artistSeq = #{voValue}</when>
+			<when test="voOption == 2">AND a.artistName LIKE CONCAT('%',#{voValue},'%')</when>
+		</choose>
+	</sql>
+	
+	<!-- artist 테이블에 해당하는 데이터 총 개수 반환 쿼리 -->
+	<select id="selectCount" resultType="Integer">
+		SELECT COUNT(*)
+			<include refid="selectCommonArtist" />
+	</select>
+	
+	<!-- codegroup List 반환 쿼리들 -->
+	<!-- 페이지네이션 없이 리스트 반환 -->
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+		select 
+		a.artistSeq,
+		a.artistName,
+		a.artistEntertainment,
+		a.artistCategoryCD,
+		a.artistDelNY,
+		a.artistRegDate,
+		a.artistModDate,
+		m.memberGenderCD,
+		m.foreignerNY
+		from artist a
+		inner join member m
+		where 1=1
+			AND a.memberSeqF=m.memberSeq
+	</select>
+	
+	<!-- 페이지네이션이 적용된 리스트 반환 -->
+	<select id="selectListWithPaging"  resultMap="resultMapObj">
+			<include refid="base.selectListUpperForMysql" />
+			SELECT
+				  a.artistSeq
+			    , a.artistName
+				, a.artistEntertainment
+				, a.artistCategoryCD
+				, a.artistDelNY
+				, a.artistRegDate
+				, a.artistModDate
+			<include refid="selectCommonArtist" />
+			
+			ORDER BY a.artistSeq asc, a.artistSeq, a.artistName
+			<include refid="base.selectListLowerForMysql" />
+	
+	</select>
+	
+	
+	<select id="selectOneWithAlbum" resultMap="resultMapObj">
+		SELECT
+		    a.artistSeq,
+		    a.artistName,
+		    a.artistCategoryCD,
+		    a.artistEntertainment,
+		    a.artistRegDate,
+		    a.artistModDate,
+		    a.artistDelNY,
+		    m.memberGenderCD,
+		    m.foreignerNY,
+		    b.albumSeq,
+		    b.albumName,
+		    b.albumCoverPath
+		FROM
+		    artist a
+			inner join member m ON a.memberSeqF = m.memberSeq
+		    JOIN album b ON b.artistSeqF = a.artistSeq
+		WHERE
+		    a.artistSeq = #{artistSeq};
+	</select>
+	
+	<select id="selectOneWithSong" resultMap="resultMapObj">
+	SELECT
+	    a.artistSeq,
+	    a.artistName,
+	    a.artistCategoryCD,
+	    a.artistEntertainment,
+	    a.artistRegDate,
+	    a.artistModDate,
+	    a.artistDelNY,
+	    m.memberGenderCD,
+	    m.foreignerNY,
+	    b.albumSeq,
+	    b.albumName,
+	    b.albumCoverPath,
+	    s.songSeq,
+	    s.songTitle,
+	    s.youtubeID
+	FROM
+	    artist a
+	    INNER JOIN member m ON a.memberSeqF = m.memberSeq
+	    INNER JOIN album b ON b.artistSeqF = a.artistSeq
+	    INNER JOIN song s ON s.albumSeqF = b.albumSeq
+	WHERE
+	    a.artistSeq = #{artistSeq};
+	</select>
+
+	<insert id="insert">
+		insert into artist(
+		artistName
+		,artistCategoryCD
+		,artistEntertainment
+		,artistRegDate
+		,artistModDate
+		,artistDelNY
+		,memberSeqF
+		)values(
+		#{artistName}
+		,#{artistCategoryCD}
+		,#{artistEntertainment}
+		,now()
+		,now()
+		,0
+		,#{memberSeqF}
+		);
+
+<!--  값이 들어가는 순간 해당 시퀀스 값을 반환하여 , 이후에 다시 데이터를 추가한 페이지를 보기위함 -->
+		<selectKey resultType="String" keyProperty="codegroupSeq"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+
+	<update id="update">
+		UPDATE artist
+		SET
+		artistName = #{artistName}
+		,artistEntertainment=#{artistEntertainment}
+		,artistCategoryCD=#{artistCategoryCD}
+		,artistModDate = now()
+		where
+		1=1
+		and artistSeq = #{artistSeq}
+	</update>
+
+	<update id="uelete">
+		UPDATE artist
+		SET
+		artistDelNY=1
+		where 1=1
+		and artistSeq=#{artistSeq}
+	</update>
+
+	<delete id="delete">
+		Delete from artist
+		where 1=1
+		and artistSeq = #{artistSeq}
+	</delete>
+	
+  </mapper>

@@ -1,43 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tag -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Seo Meta -->
-    <meta name="description" content="Listen App - Online Music Streaming App Template">
-    <meta name="keywords" content="music template, music app, music web app, responsive music app, music, themeforest, html music app template, css3, html5">
-
-    <title>Ditto</title>
-
-    <!-- Favicon -->
-    <link href="images/logos/favicon.png" rel="icon"/>
-
-    <!-- IOS Touch Icons -->
-    <link rel="apple-touch-icon" href="images/logos/touch-icon-iphone.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/logos/touch-icon-ipad.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/logos/touch-icon-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="images/logos/touch-icon-ipad-retina.png">
-
-    <!-- Styles -->
-    <link href="css/plugins.bundle.css" rel="stylesheet" type="text/css"/>
-    <link href="css/styles.bundle.css" rel="stylesheet" type="text/css"/>
-
-    <!-- Google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<div th:replace="~{ditto/include/Head_Tag :: Head_Tag}"></div>
 
 </head>
 <body>
+    
+    <!-- 입력한 아이디와 비밀번호가 일치하지 않을 때 띄워줄 모달 -->
+    <div class="modal fade" id="invalidModal" tabindex="-1" role="dialog" aria-labelledby="invalidModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="invalidModalLabel">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Oops! I think the wrong ID or password was entered
+                    <br>Please enter a valid value to enjoy Ditto's melody
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Line loader [[ Find at scss/framework/loader.scss ]] -->
+    <!-- Line loader ( Find at scss/framework/loader.scss ) -->
     <div id="line_loader"></div>
     
-    <!-- Start:: loader [[ Find at scss/framework/loader.scss ]] -->
+    <!-- Start:: loader ( Find at scss/framework/loader.scss ) -->
     <div id="loader">
         <div class="loader">
             <div class="loader__eq mx-auto">
@@ -53,9 +46,9 @@
     </div>
     <!-- End:: loader -->
 
-    <!-- Start:: wrapper [[ Find at scss/framework/wrapper.scss ]] -->
+    <!-- Start:: wrapper ( Find at scss/framework/wrapper.scss ) -->
     <div id="wrapper">
-        <!-- Start:: auth [[ Find at scss/framework/auth.scss ]] -->
+        <!-- Start:: auth ( Find at scss/framework/auth.scss ) -->
         <div class="auth py-5">
             <div class="container">
                 <div class="row">
@@ -69,7 +62,7 @@
                                     </a>
                                 </div>
                                 <p class="fs-6">Welcome to Ditto, <br>where your story meets its soundtrack</p>
-                                <form action="#" class="mt-5">
+                                <form id="loginForm" action="/loginMethod" method="post" class="mt-5">
                                     <div class="mb-5">
                                         <a href="javascript:void(0);" class="btn btn-white w-100">
                                             <div class="btn__wrap">
@@ -80,7 +73,7 @@
 
                                         <a href="javascript:void(0);" class="btn btn-white w-100 mt-2">
                                             <div class="btn__wrap">
-                                                <i><img src="images/logos/kakaotalk.png" style="height : 25px;"></i>
+                                                <i><img src="/ditto/images/logos/kakaotalk.png" style="height : 25px;"></i>
                                                 <span class="ms-2">Login with Kakao</span>
                                             </div>
                                         </a>
@@ -89,20 +82,20 @@
                                         <div class="auth__or mx-auto fw-medium"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="username" class="form-label fw-medium">ID</label>
-                                        <input type="text" id="username" class="form-control">
+                                        <label for="memberID" class="form-label fw-medium">ID</label>
+                                        <input type="text" id="memberID" name="memberID" class="form-control">
                                     </div>
                                     <div class="mb-2">
-                                        <label for="password" class="form-label fw-medium">Password</label>
-                                        <input type="password" id="password" class="form-control">
+                                        <label for="memberPWD" class="form-label fw-medium">Password</label>
+                                        <input type="password" id="memberPWD" name="memberPWD" class="form-control">
                                     </div>
                                     <div class="mb-4 text-end">
-                                        <a href="#" class="link-primary fw-medium">Forgot Password?</a>
+                                        <a href="/forgotPWD" class="link-primary fw-medium">Forgot Password?</a>
                                     </div>
                                     <div class="mb-5">
-                                        <input type="submit" class="btn btn-primary w-100" value="Login">
+                                        <input type="submit" id="buttonLogIn" class="btn btn-primary w-100" value="Login">
                                     </div>
-                                    <p>Sign up and let Ditto be the soundtrack of your life! <br><a href="register.html" class="fw-medium external">Register</a></p>
+                                    <p>Sign up and let Ditto be the soundtrack of your life! <br><a href="/JoinIn" class="fw-medium external">Register</a></p>
                                 </form>
                             </div>
                         </div>
@@ -114,10 +107,73 @@
     </div>
     <!-- End:: wrapper -->
 
-
     <!-- Scripts -->
-    <script src="js/plugins.bundle.js"></script>
-    <script src="js/scripts.bundle.js"></script>
+    <script src="/ditto/js/plugins.bundle.js"></script>
+    <script src="/ditto/js/scripts.bundle.js"></script>
+    
+    <!-- 로그인 처리 위한 스크립트 -->
+    <script>
+    $(document).ready(function() {
+        // 로그인 폼 submit 이벤트
+        $("#loginForm").submit(function(e) {
+            e.preventDefault(); // 폼 제출 방지
+            
+            var memberID = $("#memberID").val().trim();
+            var memberPWD = $("#memberPWD").val().trim();
+            
+            // 입력값이 비어 있는지 확인하여 입력되지 않은 경우 클래스를 추가하여 시각적으로 사용자에게 표시
+            if (memberID === '') {
+                $("#memberID").addClass('is-invalid');
+                $("#IDFeedback").text("Please enter your ID");
+                return;
+            } else {
+                $("#memberID").removeClass('is-invalid');
+                $("#IDFeedback").text("");
+            }
 
+            if (memberPWD === '') {
+                $("#memberPWD").addClass('is-invalid');
+                $("#pwdFeedback").text("Please enter your Password");
+                return;
+            } else {
+                $("#memberPWD").removeClass('is-invalid');
+                $("#pwdFeedback").text("");
+            }
+
+            // 서버로 로그인 정보 전송
+            $.ajax({
+                async: true,
+                cache: false,
+                type: "post",
+                url: "/loginMethod",
+                data: {
+                    "memberID": memberID,
+                    "memberPWD": memberPWD
+                },
+                success: function(response) {
+                    if (response.rt === "success") {
+                        // 로그인 성공 시 페이지 이동
+                        window.location.href = "/Ditto";
+                    } else {
+                        // 로그인 실패 시 모달 띄움
+                        $("#invalidModal").modal("show");
+                    }
+                },
+                error: function() {
+                    // 에러 처리
+                    console.log("Error in processing login.");
+                }
+            });
+        });
+
+        // 엔터 키 이벤트
+        $("#memberPWD").keypress(function(e) {
+            if (e.which == 13) { // 눌린 키가 엔터 키인 경우
+                e.preventDefault(); // 폼 제출 방지
+                $("#buttonLogIn").click(); // 로그인 버튼 클릭 이벤트 호출
+            }
+        });
+    });
+    </script>
 </body>
 </html>

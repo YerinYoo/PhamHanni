@@ -1,36 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tag -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Seo Meta -->
-    <meta name="description" content="Listen App - Online Music Streaming App Template">
-    <meta name="keywords" content="music template, music app, music web app, responsive music app, music, themeforest, html music app template, css3, html5">
-
-    <title>Ditto</title>
-
-    <!-- Favicon -->
-    <link href="images/logos/favicon.png" rel="icon"/>
-
-    <!-- IOS Touch Icons -->
-    <link rel="apple-touch-icon" href="images/logos/touch-icon-iphone.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/logos/touch-icon-ipad.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/logos/touch-icon-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="images/logos/touch-icon-ipad-retina.png">
-
-    <!-- Styles -->
-    <link href="css/plugins.bundle.css" rel="stylesheet" type="text/css"/>
-    <link href="css/styles.bundle.css" rel="stylesheet" type="text/css"/>
-
-    <!-- Google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+	<div th:replace="~{ditto/include/Head_Tag :: Head_Tag}"></div>
 </head>
 <body>
 
@@ -55,10 +26,10 @@
     </div>
   
 
-    <!-- Line loader [[ Find at scss/framework/loader.scss ]] -->
+    <!-- Line loader -->
     <div id="line_loader"></div>
     
-    <!-- Start:: loader [[ Find at scss/framework/loader.scss ]] -->
+    <!-- Start:: loader -->
     <div id="loader">
         <div class="loader">
             <div class="loader__eq mx-auto">
@@ -74,9 +45,9 @@
     </div>
     <!-- End:: loader -->
 
-    <!-- Start:: wrapper [[ Find at scss/framework/wrapper.scss ]] -->
+    <!-- Start:: wrapper -->
     <div id="wrapper">
-        <!-- Start:: auth [[ Find at scss/framework/auth.scss ]] -->
+        <!-- Start:: auth -->
         <div class="auth py-5">
             <div class="container">
                 <div class="row">
@@ -115,8 +86,8 @@
 
 
     <!-- Scripts -->
-    <script src="js/plugins.bundle.js"></script>
-    <script src="js/scripts.bundle.js"></script>
+    <script src="/ditto/js/plugins.bundle.js"></script>
+    <script src="/ditto/js/scripts.bundle.js"></script>
 
 
     <!-- 페이지 구상용 스크립트 / submit 버튼 클릭 시 모달 띄우기 -->

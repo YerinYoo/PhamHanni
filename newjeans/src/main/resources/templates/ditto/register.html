@@ -1,127 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tag -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Seo Meta -->
-    <meta name="description" content="Listen App - Online Music Streaming App Template">
-    <meta name="keywords" content="music template, music app, music web app, responsive music app, music, themeforest, html music app template, css3, html5">
-
-    <title>Ditto</title>
-
-    <!-- Favicon -->
-    <link href="images/logos/favicon.png" rel="icon"/>
-
-    <!-- IOS Touch Icons -->
-    <link rel="apple-touch-icon" href="images/logos/touch-icon-iphone.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/logos/touch-icon-ipad.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/logos/touch-icon-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="images/logos/touch-icon-ipad-retina.png">
-
-    <!-- Styles -->
-    <link href="css/plugins.bundle.css" rel="stylesheet" type="text/css"/>
-    <link href="css/styles.bundle.css" rel="stylesheet" type="text/css"/>
-
-    <!-- Google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<div th:replace="~{ditto/include/Head_Tag :: Head_Tag}"></div>
 
     <!-- input들에 대한 validation 관련 start -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <script>
-    $(document).ready(function() {
-      $('#registerForm').submit(function(event) {
-        event.preventDefault(); // 폼의 기본 동작 방지
+		<script>
+			$(document).ready(function() {
+			    $('#registerForm').submit(function(event) {
+			        event.preventDefault(); // 폼의 기본 동작 방지
+			
+			        var isValid = true;
+			
+			        // ID 입력란 유효성 검사
+			        var idValue = $('#memberID').val().trim();
+			        if (idValue === '') {
+			            $('#memberID').addClass('is-invalid');
+			            isValid = false;
+			        } else {
+			            $('#memberID').removeClass('is-invalid');
+			            if (!/^[a-zA-Z0-9]{1,15}$/.test(idValue)) {
+			                $('#memberID').addClass('is-invalid');
+			                $('#memberID + .invalid-feedback').text('Please enter a valid ID (letters and numbers only, up to 15 characters)').show();
+			                isValid = false;
+			            } else {
+			                $('#memberID').removeClass('is-invalid');
+			                $('#memberID + .invalid-feedback').hide();
+			            }
+			        }
+			
+			        // Email 입력란 유효성 검사
+			        var emailValue = $('#memberEmail').val().trim();
+			        if (emailValue === '') {
+			            $('#memberEmail').addClass('is-invalid');
+			            isValid = false;
+			        } else {
+			            $('#memberEmail').removeClass('is-invalid');
+			            if (!isValidEmail(emailValue)) {
+			                $('#memberEmail').addClass('is-invalid');
+			                $('#memberEmail + .invalid-feedback').text('Please enter a valid email address').show();
+			                isValid = false;
+			            } else {
+			                $('#memberEmail').removeClass('is-invalid');
+			                $('#memberEmail + .invalid-feedback').hide();
+			            }
+			        }
+			
+			        // Mobile 입력란 유효성 검사
+			        var mobileValue = $('#memberPhone').val().trim();
+			        if (mobileValue === '') {
+			            $('#memberPhone').addClass('is-invalid');
+			            isValid = false;
+			        } else {
+			            $('#memberPhone').removeClass('is-invalid');
+			            if (!/^[0-9]{1,}$/.test(mobileValue)) {
+			                $('#memberPhone').addClass('is-invalid');
+			                $('#memberPhone + .invalid-feedback').text('Please enter a valid mobile number (numbers only)').show();
+			                isValid = false;
+			            } else {
+			                $('#memberPhone').removeClass('is-invalid');
+			                $('#memberPhone + .invalid-feedback').hide();
+			            }
+			        }
+			
+			        // Password 입력란 유효성 검사
+			        var passwordValue = $('#memberPWD').val().trim();
+			        if (passwordValue === '') {
+			            $('#memberPWD').addClass('is-invalid');
+			            isValid = false;
+			        } else {
+			            $('#memberPWD').removeClass('is-invalid');
+			            if (!/^[a-zA-Z0-9]{1,15}$/.test(passwordValue)) {
+			                $('#memberPWD').addClass('is-invalid');
+			                $('#password + .invalid-feedback').text('Please enter a valid password (letters and numbers only, up to 15 characters)').show();
+			                isValid = false;
+			            } else {
+			                $('#memberPWD').removeClass('is-invalid');
+			                $('#memberPWD + .invalid-feedback').hide();
+			            }
+			        }
+			
+			        // Check Password 입력란 유효성 검사
+			        var checkPasswordValue = $('#check-password').val().trim();
+			        if (checkPasswordValue === '') {
+			            $('#check-password').addClass('is-invalid');
+			            isValid = false;
+			        } else {
+			            $('#check-password').removeClass('is-invalid');
+			            if (checkPasswordValue !== passwordValue) {
+			                $('#check-password').addClass('is-invalid');
+			                $('#check-password + .invalid-feedback').text('Passwords do not match').show();
+			                isValid = false;
+			            } else {
+			                $('#check-password').removeClass('is-invalid');
+			                $('#check-password + .invalid-feedback').hide();
+			            }
+			        }
+			
+					// First Name 입력란 유효성 검사
+					var firstNameValue = $('#memberFirstName').val().trim();
+					if (firstNameValue === '') {
+					    $('#memberFirstName').addClass('is-invalid');
+					    isValid = false;
+					} else {
+					    if (!/^[a-zA-Z가-힣]{1,10}$/.test(firstNameValue)) {
+					        $('#memberFirstName').addClass('is-invalid');
+					        $('#memberFirstName + .invalid-feedback').text('Please enter a valid first name (up to 10 characters, letters and 한글 only)').show();
+					        isValid = false;
+					    } else {
+					        $('#memberFirstName').removeClass('is-invalid');
+					        $('#memberFirstName + .invalid-feedback').hide();
+					    }
+					}
+					
+					// Last Name 입력란 유효성 검사
+					var lastNameValue = $('#memberLastName').val().trim();
+					if (lastNameValue === '') {
+					    $('#memberLastName').addClass('is-invalid');
+					    isValid = false;
+					} else {
+					    if (!/^[a-zA-Z가-힣]{1,10}$/.test(lastNameValue)) {
+					        $('#memberLastName').addClass('is-invalid');
+					        $('#memberLastName + .invalid-feedback').text('Please enter a valid last name (up to 10 characters, letters and 한글 only)').show();
+					        isValid = false;
+					    } else {
+					        $('#memberLastName').removeClass('is-invalid');
+					        $('#memberLastName + .invalid-feedback').hide();
+					    }
+					}
+			
+			        // Gender 선택 확인
+			        var genderChecked = $('[name="memberGenderCD"]:checked').length > 0;
+			        if (!genderChecked) {
+			            $('#memberGenderCD-validation').addClass('is-invalid');
+			            $('#memberGenderCD-validation + .invalid-feedback').text('Please select your gender').show();
+			            isValid = false;
+			        } else {
+			            $('#memberGenderCD-validation').removeClass('is-invalid');
+			            $('#memberGenderCD-validation + .invalid-feedback').hide();
+			        }
+			
+			        // Are you Korean? 선택 확인
+			        var koreanChecked = $('[name="foreignerNY"]:checked').length > 0;
+			        if (!koreanChecked) {
+			            $('#foreignerNY-validation').addClass('is-invalid');
+			            $('#foreignerNY-validation + .invalid-feedback').text('Please select an option').show();
+			            isValid = false;
+			        } else {
+			            $('#foreignerNY-validation').removeClass('is-invalid');
+			            $('#foreignerNY-validation + .invalid-feedback').hide();
+			        }
+			
+			        // 유효성 검사 결과에 따라 처리
+			        if (isValid) {
+			            // 유효성 검사 통과 시 폼 제출
+			            this.submit();
+			        } else {
+			            // 유효성 검사 실패 시 모달 띄우기
+			            $('#validationModal').modal('show');
+			        }
+			    });
+			
+			    // 이메일 형식 검사 함수
+			    function isValidEmail(memberEmail) {
+			        return /\S+@\S+\.\S+/.test(memberEmail);
+			    }
+			});
+
+	</script>
     
-        var isValid = true;
-    
-        // ID 입력란 유효성 검사
-        var idValue = $('#ID').val().trim();
-        if (idValue === '') {
-          $('#ID').addClass('is-invalid');
-          isValid = false;
-        } else {
-          $('#ID').removeClass('is-invalid');
-        }
-    
-        // Email 입력란 유효성 검사
-        var emailValue = $('#email').val().trim();
-        if (emailValue === '') {
-          $('#email').addClass('is-invalid');
-          isValid = false;
-        } else {
-          $('#email').removeClass('is-invalid');
-        }
-    
-        // Mobile 입력란 유효성 검사
-        var mobileValue = $('#mobile').val().trim();
-        if (mobileValue === '') {
-          $('#mobile').addClass('is-invalid');
-          isValid = false;
-        } else {
-          $('#mobile').removeClass('is-invalid');
-        }
-    
-        // Password 입력란 유효성 검사
-        var passwordValue = $('#password').val().trim();
-        if (passwordValue === '') {
-          $('#password').addClass('is-invalid');
-          isValid = false;
-        } else {
-          $('#password').removeClass('is-invalid');
-        }
-    
-        // Check Password 입력란 유효성 검사
-        var checkPasswordValue = $('#check-password').val().trim();
-        if (checkPasswordValue === '') {
-          $('#check-password').addClass('is-invalid');
-          isValid = false;
-        } else {
-          $('#check-password').removeClass('is-invalid');
-        }
-    
-        // First Name 입력란 유효성 검사
-        var firstNameValue = $('#first-name').val().trim();
-        if (firstNameValue === '') {
-          $('#first-name').addClass('is-invalid');
-          isValid = false;
-        } else {
-          $('#first-name').removeClass('is-invalid');
-        }
-    
-        // Last Name 입력란 유효성 검사
-        var lastNameValue = $('#last-name').val().trim();
-        if (lastNameValue === '') {
-          $('#last-name').addClass('is-invalid');
-          isValid = false;
-        } else {
-          $('#last-name').removeClass('is-invalid');
-        }
-    
-        // 유효성 검사 결과에 따라 처리
-        if (isValid) {
-          // 유효성 검사 통과 시 폼 제출
-          this.submit();
-        } else {
-          // 유효성 검사 실패 시 모달 띄우기
-          $('#validationModal').modal('show');
-        }
-      });
-    });
-    </script>
-    
-    <style>
-      .is-invalid {
-        border-color: red !important;
-      }
-    </style>
+	<style>
+	    /* 유효성 검사 실패 시 빨간 테두리와 메시지 스타일 */
+	    .is-invalid {
+	        border-color: red !important;
+	    }
+	
+	    .invalid-feedback {
+	        display: none; /* 초기에는 오류 메시지 숨김 */
+	        color: red;
+	        font-size: 7px; /* 원하는 폰트 크기로 조정 */
+	        margin-top: 5px; /* 원하는 여백 값으로 조정 */
+	    }
+	</style>
+
 <!-- validation 관련 end -->
 </head>
 <body>
@@ -144,10 +207,10 @@
         </div>
       </div>
 
-    <!-- Line loader [[ Find at scss/framework/loader.scss ]] -->
+    <!-- Line loader -->
     <div id="line_loader"></div>
     
-    <!-- Start:: loader [[ Find at scss/framework/loader.scss ]] -->
+    <!-- Start:: loader -->
     <div id="loader">
         <div class="loader">
             <div class="loader__eq mx-auto">
@@ -163,9 +226,9 @@
     </div>
     <!-- End:: loader -->
 
-    <!-- Start:: wrapper [[ Find at scss/framework/wrapper.scss ]] -->
+    <!-- Start:: wrapper -->
     <div id="wrapper">
-        <!-- Start:: auth [[ Find at scss/framework/auth.scss ]] -->
+        <!-- Start:: auth -->
         <div class="auth py-5">
             <div class="container">
                 <div class="row">
@@ -179,7 +242,7 @@
                                     </a>
                                 </div>
                                 <p class="fs-6">Join Ditto and let your music story begin</p>
-                                <form action="#" class="mt-5" id="registerForm">
+                                <form action="/insert" class="mt-5" id="registerForm" method="post">
                                     <div class="mb-5">
                                         <a href="javascript:void(0);" class="btn btn-white w-100">
                                             <div class="btn__wrap">
@@ -189,7 +252,7 @@
                                         </a>
                                         <a href="javascript:void(0);" class="btn btn-white w-100 mt-2">
                                             <div class="btn__wrap">
-                                                <i><img src="images/logos/kakaotalk.png" style="height : 25px;"></i>
+                                                <i><img src="/ditto/images/logos/kakaotalk.png" style="height : 25px;"></i>
                                                 <span class="ms-2">Login with Kakao</span>
                                             </div>
                                         </a>
@@ -199,82 +262,95 @@
                                     </div>
                                     <div class="row" style="max-height: 250px; overflow-y: auto;">
                                         <div class="col-12 mb-3">
-                                            <label for="ID" class="form-label fw-medium">ID</label>
-                                            <input type="text" id="ID" class="form-control">
+                                            <label for="memberID" class="form-label fw-medium">ID</label>
+                                            <input type="text" id="memberID" name="memberID" class="form-control">
+											<div class="invalid-feedback">ID must contain only letters and numbers, up to 15 characters</div>
                                         </div>
 
                                         <div class="col-6 mb-3">
-                                            <label for="email" class="form-label fw-medium">Email</label>
-                                            <input type="text" id="email" class="form-control">
+                                            <label for="memberEmail" class="form-label fw-medium">Email</label>
+                                            <input type="text" id="memberEmail" name="memberEmail" class="form-control">
+											<div class="invalid-feedback">Please enter a valid email address (e.g., example@example.com)</div>
                                         </div>
 
                                         <div class="col-6 mb-3">
-                                            <label for="mobile" class="form-label fw-medium">Mobile</label>
-                                            <input type="text" id="mobile" class="form-control">
+                                            <label for="memberPhone" class="form-label fw-medium">Mobile</label>
+                                            <input type="text" id="memberPhone" name="memberPhone" class="form-control">
+											<div class="invalid-feedback">Mobile number should only contain digits</div>
                                         </div>
 
                                         <div class="col-6 mb-3">
-                                            <label for="password" class="form-label fw-medium">Password</label>
-                                            <input type="password" id="password" class="form-control">
+                                            <label for="memberPWD" class="form-label fw-medium">Password</label>
+                                            <input type="password" id="memberPWD" name="memberPWD" class="form-control">
+											<div class="invalid-feedback">Password must contain only letters and numbers, up to 15 characters</div>
                                         </div>
 
                                         <div class="col-6 mb-3">
                                             <label for="check-password" class="form-label fw-medium">Check Password</label>
                                             <input type="password" id="check-password" class="form-control">
+											<div class="invalid-feedback">Please make sure your passwords match</div>
                                         </div>
 
                                         <div class="col-6 mb-3">
-                                            <label for="first-name" class="form-label fw-medium">First Name</label>
-                                            <input type="text" id="first-name" class="form-control">
+                                            <label for="memberFirstName" class="form-label fw-medium">First Name</label>
+                                            <input type="text" id="memberFirstName" name="memberFirstName" class="form-control">
+											<div class="invalid-feedback">First Name can only contain up to 10 characters in English or Korean</div>
                                         </div>
 
                                         <div class="col-6 mb-3">
-                                            <label for="last-name" class="form-label fw-medium">Last Name</label>
-                                            <input type="text" id="last-name" class="form-control">
+                                            <label for="memberLastName" class="form-label fw-medium">Last Name</label>
+                                            <input type="text" id="memberLastName" name="memberLastName" class="form-control">
+											<div class="invalid-feedback">Last Name can only contain up to 10 characters in English or Korean</div>
                                         </div>
 
                                         <div class="col-6 mb-3">
-                                            <label for="genderCD" class="form-label fw-medium">Gender</label>
+                                            <label for="memberGenderCD" class="form-label fw-medium">Gender</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <input class="form-check-input" type="radio" name="memberGenderCD" id="memberGenderCD" value="1">
+                                                <label class="form-check-label" for="memberGenderCD">
                                                   Male
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                <input class="form-check-input" type="radio" name="memberGenderCD" id="memberGenderCD" value="2">
+                                                <label class="form-check-label" for="memberGenderCD">
                                                   Female
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                <input class="form-check-input" type="radio" name="memberGenderCD" id="memberGenderCD" value="3">
+                                                <label class="form-check-label" for="memberGenderCD">
                                                   etc.
                                                 </label>
                                               </div>
+											  <div class="invalid-feedback">
+									              Please select an option.
+									          </div>
                                         </div>
 
                                         <div class="col-6 mb-3">
                                             <label for="foreignerNY" class="form-label fw-medium">Are you Korean?</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <input class="form-check-input" type="radio" name="foreignerNY" id="foreignerNY" value="1">
+                                                <label class="form-check-label" for="foreignerNY">
                                                   Yes
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                <input class="form-check-input" type="radio" name="foreignerNY" id="foreignerNY" value="0">
+                                                <label class="form-check-label" for="foreignerNY">
                                                   No
                                                 </label>
                                               </div>
+											  <div class="invalid-feedback">
+									              Please select an option.
+									          </div>
                                         </div>
                                     </div>
                                     <div class="mb-5">
                                         <input type="submit" class="btn btn-primary w-100" value="Register">
                                     </div>
-                                    <p>Found your melody before? Sign back in with Ditto <br><a href="login.html" class="fw-medium external">Login</a></p>
+                                    <p>Found your melody before? Sign back in with Ditto <br><a th:href="@{/Login}" class="fw-medium external">Login</a></p>
                                 </form>
                             </div>
                         </div>
@@ -288,8 +364,8 @@
 
 
     <!-- Scripts -->
-    <script src="js/plugins.bundle.js"></script>
-    <script src="js/scripts.bundle.js"></script>
+    <script src="/ditto/js/plugins.bundle.js"></script>
+    <script src="/ditto/js/scripts.bundle.js"></script>
 
 </body>
 </html>

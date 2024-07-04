@@ -39,6 +39,6 @@ public interface MemberDao {
     public MemberDto selectOneByIDAndEmail(String memberID, String memberEmail);
     
     // 비밀번호 업데이트
-    public int updateMemberPassword(Long memberSeq, String encryptedPassword);
+    public int updateMemberPassword(String memberSeq, String encryptedPassword);
 	
 }

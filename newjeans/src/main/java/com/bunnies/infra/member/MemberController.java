@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bunnies.common.base.BaseController;
@@ -128,7 +130,26 @@ public class MemberController extends BaseController {
 	public String forgotPWD (MemberDto dto) throws Exception {
 		return "ditto/forgot-pwd";
 	}
+	
+	//비밀번호 재발급 메서드 
+    // 비밀번호 재설정
+	@ResponseBody
+	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+	public Map<String, Object> resetPassword(@RequestParam("memberID") String memberID, @RequestParam("memberEmail") String memberEmail) {
+	    Map<String, Object> returnMap = new HashMap<>();
+
+	    boolean success = service.resetPassword(memberID, memberEmail);
+
+	    if (success) {
+	        returnMap.put("rt", "success");
+	    } else {
+	        returnMap.put("rt", "fail");
+	    }
+
+	    return returnMap;
+	}
+
+    
 	//비밀번호 찾기 관련 e
-	@RequestMapping(value = "")
-	public Map<String, Object> findPWD (MemberDto dto, HttpSession session) throws Exception
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<div th:replace="~{ditto/include/Head_Tag :: Head_Tag}"></div>
+    <!-- 헤드 태그 인클루드 -->
+    <div th:replace="~{ditto/include/Head_Tag :: Head_Tag}"></div>
 </head>
 <body>
 
-    <!-- 비밀번호 찾기 버튼 클릭 시, 입력한 정보가 일치하지 않을 경우 표출할 모달 -->
+    <!-- 비밀번호 찾기 실패 시 나타날 모달 -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel">Notification</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bunny couldn't find a member whose email information matches the ID you entered. Please re-enter.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-            Bunny couldn't find a member whose email information matches the ID you entered. Please re-enter.
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
         </div>
     </div>
-  
 
     <!-- Line loader -->
     <div id="line_loader"></div>
     
-    <!-- Start:: loader -->
+    <!-- Loader -->
     <div id="loader">
         <div class="loader">
             <div class="loader__eq mx-auto">
@@ -43,11 +43,11 @@
             <span class="loader__text mt-2">Loading</span>
         </div>
     </div>
-    <!-- End:: loader -->
+    <!-- End Loader -->
 
-    <!-- Start:: wrapper -->
+    <!-- Wrapper -->
     <div id="wrapper">
-        <!-- Start:: auth -->
+        <!-- Auth -->
         <div class="auth py-5">
             <div class="container">
                 <div class="row">
@@ -61,14 +61,14 @@
                                     </a>
                                 </div>
                                 <p class="fs-6">Forgotten your login melody? <br>Let Ditto harmonize your access once more</p>
-                                <form action="#" class="mt-5">
+                                <form id="resetPasswordForm" class="mt-5" action="/resetPassword" method="post">
                                     <div class="mb-3">
-                                        <label for="username" class="form-label fw-medium">ID</label>
-                                        <input type="text" id="username" class="form-control">
+                                        <label for="memberID" class="form-label fw-medium">ID</label>
+                                        <input type="text" id="memberID" name="memberID" class="form-control">
                                     </div>
                                     <div class="mb-2">
                                         <label for="memberEmail" class="form-label fw-medium">Email</label>
-                                        <input type="text" id="memberEmail" class="form-control">
+                                        <input type="email" id="memberEmail" name="memberEmail" class="form-control">
                                     </div>
                                     <div class="mb-5 mt-3">
                                         <input type="submit" id="submitBtn" class="btn btn-primary w-100" value="Submit">
@@ -80,44 +80,48 @@
                 </div>
             </div>
         </div>
-        <!-- End:: auth -->
+        <!-- End Auth -->
     </div>
-    <!-- End:: wrapper -->
-
+    <!-- End Wrapper -->
 
     <!-- Scripts -->
     <script src="/ditto/js/plugins.bundle.js"></script>
     <script src="/ditto/js/scripts.bundle.js"></script>
 
-
-    <!-- 페이지 구상용 스크립트 / submit 버튼 클릭 시 모달 띄우기 -->
+    <!-- Custom Script -->
     <script>
         $(document).ready(function() {
-        $('#submitBtn').click(function(event) {
-            event.preventDefault(); // 폼의 기본 동작 방지
+            $('#resetPasswordForm').submit(function(event) {
+                event.preventDefault(); // 폼의 기본 동작 방지
 
-            var userId = $('#userIdInput').val(); // 아이디 입력란의 값 가져오기
-            var email = $('#emailInput').val();   // 이메일 입력란의 값 가져오기
+                // 폼 데이터를 FormData 객체로 가져오기
+                var formData = new FormData(this);
 
-            // 여기서 서버에 userId와 email을 보내고 처리 결과에 따라 모달을 띄워야 함
-            // 아래는 예시 코드
-            if (userId === '사용자ID' && email === '사용자@email.com') {
-            // 아이디와 이메일이 일치하는 회원을 찾았을 때, 비밀번호 전송 등의 처리를 하면 됨
-            alert('비밀번호를 이메일로 전송했습니다.');
-            } else {
-            // 일치하는 회원을 찾지 못했을 때 모달 띄우기
-            showModal();
-            }
+                // 서버로 비동기 POST 요청 보내기
+                $.ajax({
+                    url: "/resetPassword",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.rt === "success") {
+                            // 비밀번호 재설정 성공 시 메시지 보여주기
+                            alert('새 비밀번호가 이메일로 전송되었습니다.');
+                        } else {
+                            // 비밀번호 재설정 실패 시 모달 띄우기
+                            $('#myModal').modal('show');
+                        }
+                    },
+                    error: function() {
+                        // 에러 발생 시 모달 띄우기
+                        $('#myModal').modal('show');
+                    }
+                });
+
+            });
         });
-
-        // 모달 띄우기 함수
-        function showModal() {
-            $('#myModal').modal('show');
-        }
-        });
-
     </script>
     
-
 </body>
 </html>

@@ -18,7 +18,7 @@ public final class Constants {
 	public static final Integer SESSION_MINUTE_XDM = 60;
 	
 	//유저 로그인 페이지 
-	public static final String URL_LOGINUSRFORM = "/recorded/Login";
+	public static final String URL_LOGINUSRFORM = "/Login";
 	
 	//어드민 로그인 페이지 
 	public static final String URL_LOGINADMFORM = "/loginAdm";

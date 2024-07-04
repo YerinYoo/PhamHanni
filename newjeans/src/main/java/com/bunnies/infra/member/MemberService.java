@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bunnies.infra.artist.ArtistVo;
+
 
 @Service
 public class MemberService {
@@ -29,7 +31,7 @@ public class MemberService {
 	}
 	
 	//전체 개수 반환 쿼리
-	public Integer selectCountMember(MemberVo memberVo) throws Exception {
+	public Integer selectCount(MemberVo memberVo) {
 		return dao.selectCountMember(memberVo);
 	}
 

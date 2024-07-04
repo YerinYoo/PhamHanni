@@ -1,0 +1,14 @@
+.star {
+    font-size: 24px;
+    color: #ccc; /* 초기 별 색 */
+    cursor: pointer;
+}
+
+.star.selected {
+    color: #ffca28; /* 선택된 별 색 */
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: #ffca28; /* 마우스 오버 시 별 색 */
+}

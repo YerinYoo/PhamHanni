@@ -7,5 +7,5 @@ import org.springframework.stereotype.Controller;
 public class AlbumController {
 
 	@Autowired
-	AlbumService service;o
+	AlbumService service;
 }

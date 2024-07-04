@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bunnies.infra.album.AlbumDao">
+
+    <resultMap id="resultMapObj" type="com.bunnies.infra.album.AlbumDto"></resultMap>
+	
+	<!-- 검색 시 사용할 수 있는 공통 구문 -->
+	<sql id="selectCommonAlbum">
+		FROM album a
+		INNER JOIN artist t ON a.artistSeqF=t.artistName
+		WHERE 1=1
+			<if test="voDelNY != null and !voDelNY.equals('')">AND a.albumDelNY = #{voDelNY}</if>
+			
+		<choose>
+			<when test="voOptionDate == 1">AND a.albumRegDate BETWEEN #{voDateStart} AND #{voDateEnd}</when>
+			<when test="voOptionDate == 2">AND a.albumModDate BETWEEN #{voDateStart} AND #{voDateEnd}</when>
+		</choose>
+
+		<choose>
+			<when test="voOption == 1">AND a.albumSeq = #{voValue}</when>
+			<when test="voOption == 2">AND a.albumName LIKE CONCAT('%',#{voValue},'%')</when>
+		</choose>
+	</sql>
+	
+	<!-- artist 테이블에 해당하는 데이터 총 개수 반환 쿼리 -->
+	<select id="selectCount" resultType="Integer">
+		SELECT COUNT(*)
+			<include refid="selectCommonAlbum" />
+	</select>
+	
+	<!-- codegroup List 반환 쿼리들 -->
+	<!-- 페이지네이션 없이 리스트 반환 -->
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+		select 
+		a.albumSeq,
+		a.albumName,
+		a.artistSeqF,
+		a.albumCategoryCD,
+		a.albumCoverPath,
+		a.albumReleaseDate,
+		a.albumRegDate,
+		a.albumModDate,
+		a.albumDelNY,
+		t.artistName
+		from album a
+		inner join artist t
+		where 1=1
+			AND a.artistSeqF=t.artistSeq
+	</select>
+	
+	<!-- 페이지네이션이 적용된 리스트 반환 -->
+	<select id="selectListWithPaging"  resultMap="resultMapObj">
+			<include refid="base.selectListUpperForMysql" />
+			SELECT
+				a.albumSeq,
+				a.albumName,
+				a.artistSeqF,
+				a.albumCategoryCD,
+				a.albumCoverPath,
+				a.albumReleaseDate,
+				a.albumRegDate,
+				a.albumModDate,
+				a.albumDelNY,
+				t.artistName
+			<include refid="selectCommonAlbum" />
+			
+			ORDER BY a.albumSeq asc, a.albumSeq, a.albumName
+			<include refid="base.selectListLowerForMysql" />
+	
+	</select>
+	
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			select 
+			a.albumSeq,
+			a.albumName,
+			a.artistSeqF,
+			a.albumCategoryCD,
+			a.albumCoverPath,
+			a.albumReleaseDate,
+			a.albumRegDate,
+			a.albumModDate,
+			a.albumDelNY,
+			t.artistName
+		FROM
+		    album a
+			inner join artist t ON a.artistSeqF = t.artistSeq
+		WHERE
+		    a.albumSeq = #{albumSeq};
+	</select>
+	
+	<insert id="insert">
+		insert into album(
+		albumName
+		,artistSeqF
+		,albumCategoryCD
+		,albumCoverPath
+		,albumReleaseDate
+		,albumRegDate
+		,albumModDate
+		,albumDelNY
+		)values(
+		#{albumName}
+		,#{artistSeqF}
+		,#{albumCategoryCD}
+		,#{albumCoverPath}
+		,#{albumReleaseDate}
+		,now()
+		,now()
+		,0
+		);
+
+<!--  값이 들어가는 순간 해당 시퀀스 값을 반환하여 , 이후에 다시 데이터를 추가한 페이지를 보기위함 -->
+		<selectKey resultType="String" keyProperty="albumSeq"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+
+	<update id="update">
+		UPDATE album
+		SET
+		albumName = #{albumName}
+		,albumCategoryCD=#{albumCategoryCD}
+		,albumCoverPath=#{albumCoverPath}
+		,albumReleaseDate=#{albumReleaseDate}
+		,artistSeqF=#{artistSeqF}
+		,artistModDate = now()
+		where
+		1=1
+		and albumSeq = #{albumSeq}
+	</update>
+
+	<update id="uelete">
+		UPDATE album
+		SET
+		albumDelNY=1
+		where 1=1
+		and albumSeq=#{albumSeq}
+	</update>
+
+	<delete id="delete">
+		Delete from album
+		where 1=1
+		and albumSeq = #{albumSeq}
+	</delete>
+	
+  </mapper>

@@ -207,4 +207,60 @@
 		order by a.memberSeq desc
 	</select>
 
+	<!-- 로그인 처리 쿼리 -->
+	<select id="selectOneByID">
+		select
+			a.memberSeq
+				,a.memberID
+				,a.memberPWD
+				,a.memberGenderCD
+				,a.memberGradeCD
+				,a.memberEmail
+				,a.memberPhone
+				,a.managerNY
+				,a.foreignerNY
+				,a.memberFirstName
+				,a.memberLastName
+				,a.memberNickName
+				,a.memberDelNY
+				,a.memberRegDate
+				,a.memberModDate
+		from
+			member a
+		where a.memberID = #{memberID}
+	</select>
+	
+	<!-- 비밀번호 찾기 시 아이디와 이메일로 회원 조회 쿼리 -->
+	<select id="selectOneByIDAndEmail" resultMap="resultMapObj">
+        select
+            a.memberSeq
+            ,a.memberID
+            ,a.memberPWD
+            ,a.memberGenderCD
+            ,a.memberGradeCD
+            ,a.memberEmail
+            ,a.memberPhone
+            ,a.managerNY
+            ,a.foreignerNY
+            ,a.memberFirstName
+            ,a.memberLastName
+            ,a.memberNickName
+            ,a.memberDelNY
+            ,a.memberRegDate
+            ,a.memberModDate
+        from
+            member a
+        where a.memberID = #{memberID}
+        and a.memberEmail = #{memberEmail}
+    </select>
+    
+    <!-- 임시 비밀번호 발급 및 업데이트 쿼리 -->
+    <update id="updateMemberPassword">
+        update member
+        set
+            memberPWD = #{encryptedPassword}
+            , memberModDate = now()
+        where memberSeq = #{memberSeq}
+    </update>
+    
   </mapper>

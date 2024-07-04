@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tag -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Seo Meta -->
+    <meta name="description" content="Listen App - Online Music Streaming App Template">
+    <meta name="keywords" content="music template, music app, music web app, responsive music app, music, themeforest, html music app template, css3, html5">
+
+    <title>Ditto</title>
+
+    <!-- Favicon -->
+    <link href="images/logos/favicon.png" rel="icon"/>
+
+    <!-- IOS Touch Icons -->
+    <link rel="apple-touch-icon" href="images/logos/touch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/logos/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/logos/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="images/logos/touch-icon-ipad-retina.png">
+
+    <!-- Styles -->
+    <link href="css/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="css/styles.bundle.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- input들에 대한 validation 관련 start -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+    $(document).ready(function() {
+      $('#registerForm').submit(function(event) {
+        event.preventDefault(); // 폼의 기본 동작 방지
+    
+        var isValid = true;
+    
+        // ID 입력란 유효성 검사
+        var idValue = $('#ID').val().trim();
+        if (idValue === '') {
+          $('#ID').addClass('is-invalid');
+          isValid = false;
+        } else {
+          $('#ID').removeClass('is-invalid');
+        }
+    
+        // Email 입력란 유효성 검사
+        var emailValue = $('#email').val().trim();
+        if (emailValue === '') {
+          $('#email').addClass('is-invalid');
+          isValid = false;
+        } else {
+          $('#email').removeClass('is-invalid');
+        }
+    
+        // Mobile 입력란 유효성 검사
+        var mobileValue = $('#mobile').val().trim();
+        if (mobileValue === '') {
+          $('#mobile').addClass('is-invalid');
+          isValid = false;
+        } else {
+          $('#mobile').removeClass('is-invalid');
+        }
+    
+        // Password 입력란 유효성 검사
+        var passwordValue = $('#password').val().trim();
+        if (passwordValue === '') {
+          $('#password').addClass('is-invalid');
+          isValid = false;
+        } else {
+          $('#password').removeClass('is-invalid');
+        }
+    
+        // Check Password 입력란 유효성 검사
+        var checkPasswordValue = $('#check-password').val().trim();
+        if (checkPasswordValue === '') {
+          $('#check-password').addClass('is-invalid');
+          isValid = false;
+        } else {
+          $('#check-password').removeClass('is-invalid');
+        }
+    
+        // First Name 입력란 유효성 검사
+        var firstNameValue = $('#first-name').val().trim();
+        if (firstNameValue === '') {
+          $('#first-name').addClass('is-invalid');
+          isValid = false;
+        } else {
+          $('#first-name').removeClass('is-invalid');
+        }
+    
+        // Last Name 입력란 유효성 검사
+        var lastNameValue = $('#last-name').val().trim();
+        if (lastNameValue === '') {
+          $('#last-name').addClass('is-invalid');
+          isValid = false;
+        } else {
+          $('#last-name').removeClass('is-invalid');
+        }
+    
+        // 유효성 검사 결과에 따라 처리
+        if (isValid) {
+          // 유효성 검사 통과 시 폼 제출
+          this.submit();
+        } else {
+          // 유효성 검사 실패 시 모달 띄우기
+          $('#validationModal').modal('show');
+        }
+      });
+    });
+    </script>
+    
+    <style>
+      .is-invalid {
+        border-color: red !important;
+      }
+    </style>
+<!-- validation 관련 end -->
+</head>
+<body>
+    <!-- 입력되지 않은 input이 있을 경우 validation과 함께 띄워줄 모달 -->
+    <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="validationModalLabel">Notification</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Oops! Looks like you missed something
+                <br>Please complete all required fields to join Ditto's melody
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Line loader [[ Find at scss/framework/loader.scss ]] -->
+    <div id="line_loader"></div>
+    
+    <!-- Start:: loader [[ Find at scss/framework/loader.scss ]] -->
+    <div id="loader">
+        <div class="loader">
+            <div class="loader__eq mx-auto">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="loader__text mt-2">Loading</span>
+        </div>
+    </div>
+    <!-- End:: loader -->
+
+    <!-- Start:: wrapper [[ Find at scss/framework/wrapper.scss ]] -->
+    <div id="wrapper">
+        <!-- Start:: auth [[ Find at scss/framework/auth.scss ]] -->
+        <div class="auth py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-9 col-sm-11 mx-auto">
+                        <div class="card">
+                            <div class="card-body p-sm-5">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h4 class="mb-0">Sign Up with <span class="text-primary">Ditto</span></h4>
+                                    <a href="index.html" class="back-home">
+                                        <i class="ri-home-4-line"></i>
+                                    </a>
+                                </div>
+                                <p class="fs-6">Join Ditto and let your music story begin</p>
+                                <form action="#" class="mt-5" id="registerForm">
+                                    <div class="mb-5">
+                                        <a href="javascript:void(0);" class="btn btn-white w-100">
+                                            <div class="btn__wrap">
+                                                <i class="ri-google-fill"></i>
+                                                <span class="ms-2">Register with Google</span>
+                                            </div>
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-white w-100 mt-2">
+                                            <div class="btn__wrap">
+                                                <i><img src="images/logos/kakaotalk.png" style="height : 25px;"></i>
+                                                <span class="ms-2">Login with Kakao</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="auth__or mx-auto fw-medium"></div>
+                                    </div>
+                                    <div class="row" style="max-height: 250px; overflow-y: auto;">
+                                        <div class="col-12 mb-3">
+                                            <label for="ID" class="form-label fw-medium">ID</label>
+                                            <input type="text" id="ID" class="form-control">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="email" class="form-label fw-medium">Email</label>
+                                            <input type="text" id="email" class="form-control">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="mobile" class="form-label fw-medium">Mobile</label>
+                                            <input type="text" id="mobile" class="form-control">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="password" class="form-label fw-medium">Password</label>
+                                            <input type="password" id="password" class="form-control">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="check-password" class="form-label fw-medium">Check Password</label>
+                                            <input type="password" id="check-password" class="form-control">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="first-name" class="form-label fw-medium">First Name</label>
+                                            <input type="text" id="first-name" class="form-control">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="last-name" class="form-label fw-medium">Last Name</label>
+                                            <input type="text" id="last-name" class="form-control">
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="genderCD" class="form-label fw-medium">Gender</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                  Male
+                                                </label>
+                                              </div>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                  Female
+                                                </label>
+                                              </div>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                  etc.
+                                                </label>
+                                              </div>
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <label for="foreignerNY" class="form-label fw-medium">Are you Korean?</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                  Yes
+                                                </label>
+                                              </div>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                  No
+                                                </label>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5">
+                                        <input type="submit" class="btn btn-primary w-100" value="Register">
+                                    </div>
+                                    <p>Found your melody before? Sign back in with Ditto <br><a href="login.html" class="fw-medium external">Login</a></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End:: auth -->
+    </div>
+    <!-- End:: wrapper -->
+
+
+    <!-- Scripts -->
+    <script src="js/plugins.bundle.js"></script>
+    <script src="js/scripts.bundle.js"></script>
+
+</body>
+</html>

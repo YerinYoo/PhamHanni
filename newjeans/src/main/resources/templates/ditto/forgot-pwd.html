@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tag -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Seo Meta -->
+    <meta name="description" content="Listen App - Online Music Streaming App Template">
+    <meta name="keywords" content="music template, music app, music web app, responsive music app, music, themeforest, html music app template, css3, html5">
+
+    <title>Ditto</title>
+
+    <!-- Favicon -->
+    <link href="images/logos/favicon.png" rel="icon"/>
+
+    <!-- IOS Touch Icons -->
+    <link rel="apple-touch-icon" href="images/logos/touch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/logos/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/logos/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="images/logos/touch-icon-ipad-retina.png">
+
+    <!-- Styles -->
+    <link href="css/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="css/styles.bundle.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <!-- 비밀번호 찾기 버튼 클릭 시, 입력한 정보가 일치하지 않을 경우 표출할 모달 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Notification</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            Bunny couldn't find a member whose email information matches the ID you entered. Please re-enter.
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+  
+
+    <!-- Line loader [[ Find at scss/framework/loader.scss ]] -->
+    <div id="line_loader"></div>
+    
+    <!-- Start:: loader [[ Find at scss/framework/loader.scss ]] -->
+    <div id="loader">
+        <div class="loader">
+            <div class="loader__eq mx-auto">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="loader__text mt-2">Loading</span>
+        </div>
+    </div>
+    <!-- End:: loader -->
+
+    <!-- Start:: wrapper [[ Find at scss/framework/wrapper.scss ]] -->
+    <div id="wrapper">
+        <!-- Start:: auth [[ Find at scss/framework/auth.scss ]] -->
+        <div class="auth py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-9 col-sm-11 mx-auto">
+                        <div class="card">
+                            <div class="card-body p-sm-5">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <h4 class="mb-0">Forgot <span class="text-primary">Password</span></h4>
+                                    <a href="index.html" class="back-home">
+                                        <i class="ri-home-4-line"></i>
+                                    </a>
+                                </div>
+                                <p class="fs-6">Forgotten your login melody? <br>Let Ditto harmonize your access once more</p>
+                                <form action="#" class="mt-5">
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label fw-medium">ID</label>
+                                        <input type="text" id="username" class="form-control">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="memberEmail" class="form-label fw-medium">Email</label>
+                                        <input type="text" id="memberEmail" class="form-control">
+                                    </div>
+                                    <div class="mb-5 mt-3">
+                                        <input type="submit" id="submitBtn" class="btn btn-primary w-100" value="Submit">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End:: auth -->
+    </div>
+    <!-- End:: wrapper -->
+
+
+    <!-- Scripts -->
+    <script src="js/plugins.bundle.js"></script>
+    <script src="js/scripts.bundle.js"></script>
+
+
+    <!-- 페이지 구상용 스크립트 / submit 버튼 클릭 시 모달 띄우기 -->
+    <script>
+        $(document).ready(function() {
+        $('#submitBtn').click(function(event) {
+            event.preventDefault(); // 폼의 기본 동작 방지
+
+            var userId = $('#userIdInput').val(); // 아이디 입력란의 값 가져오기
+            var email = $('#emailInput').val();   // 이메일 입력란의 값 가져오기
+
+            // 여기서 서버에 userId와 email을 보내고 처리 결과에 따라 모달을 띄워야 함
+            // 아래는 예시 코드
+            if (userId === '사용자ID' && email === '사용자@email.com') {
+            // 아이디와 이메일이 일치하는 회원을 찾았을 때, 비밀번호 전송 등의 처리를 하면 됨
+            alert('비밀번호를 이메일로 전송했습니다.');
+            } else {
+            // 일치하는 회원을 찾지 못했을 때 모달 띄우기
+            showModal();
+            }
+        });
+
+        // 모달 띄우기 함수
+        function showModal() {
+            $('#myModal').modal('show');
+        }
+        });
+
+    </script>
+    
+
+</body>
+</html>

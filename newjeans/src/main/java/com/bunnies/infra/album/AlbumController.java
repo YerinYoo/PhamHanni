@@ -8,4 +8,5 @@ public class AlbumController {
 
 	@Autowired
 	AlbumService service;
+
 }

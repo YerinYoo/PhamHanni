@@ -3,10 +3,8 @@ package com.bunnies.infra.member;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.bunnies.infra.artist.ArtistVo;
-
 
 @Service
 public class MemberService {
@@ -39,6 +37,21 @@ public class MemberService {
 	//insert
 	public Integer insert (MemberDto dto) {
 		return dao.insert(dto);
+	}
+	
+	//비밀번호 암호화 처리
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	
+	// 로그인 처리 (사용자의 입력 값 & 암호화된 비밀번호 비교)
+	public MemberDto authenticate(String ID, String pwd) {
+		MemberDto member = dao.selectOneByID(ID);
+
+		if (member != null && passwordEncoder.matches(pwd, member.getMemberPWD())) {
+			return member;
+		} else {
+			return null;
+		}
+
 	}
 	
 	//update

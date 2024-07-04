@@ -18,6 +18,9 @@ public interface MemberDao {
 	//select One
 	public MemberDto selectOne(MemberDto dto);
 
+	//로그인 처리
+	public MemberDto selectOneByID(String memberID);
+	
 	//method
 	public int insert(MemberDto dto);
 	
@@ -30,5 +33,12 @@ public interface MemberDao {
 	public int uelete(MemberDto dto);
 	
 	public int delete(MemberDto dto);
+	
+	//비밀번호 찾기 관련
+    // 아이디와 이메일로 회원 정보 조회
+    public MemberDto selectOneByIDAndEmail(String memberID, String memberEmail);
+    
+    // 비밀번호 업데이트
+    public int updateMemberPassword(Long memberSeq, String encryptedPassword);
 	
 }

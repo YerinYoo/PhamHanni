@@ -1,43 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tag -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Seo Meta -->
-    <meta name="description" content="Listen App - Online Music Streaming App Template">
-    <meta name="keywords" content="music template, music app, music web app, responsive music app, music, themeforest, html music app template, css3, html5">
-
-    <title>Listen App - Online Music Streaming App</title>
-
-    <!-- Favicon -->
-    <link href="images/logos/favicon.png" rel="icon"/>
-
-    <!-- IOS Touch Icons -->
-    <link rel="apple-touch-icon" href="images/logos/touch-icon-iphone.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/logos/touch-icon-ipad.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/logos/touch-icon-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="images/logos/touch-icon-ipad-retina.png">
-
-    <!-- Styles -->
-    <link href="css/plugins.bundle.css" rel="stylesheet" type="text/css"/>
-    <link href="css/styles.bundle.css" rel="stylesheet" type="text/css"/>
-
-    <!-- Google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+	<div th:replace="~{ditto/include/Head_Tag :: Head_Tag}"></div>
 </head>
 <body>
 
-    <!-- Line loader [[ Find at scss/framework/loader.scss ]] -->
     <div id="line_loader"></div>
     
-    <!-- Start:: loader [[ Find at scss/framework/loader.scss ]] -->
     <div id="loader">
         <div class="loader">
             <div class="loader__eq mx-auto">
@@ -53,10 +22,9 @@
     </div>
     <!-- End:: loader -->
 
-    <!-- Start:: wrapper [[ Find at scss/framework/wrapper.scss ]] -->
     <div id="wrapper">
 
-        <!-- Start:: sidebar [[ Find at scss/framework/sidebar.scss ]] -->
+		<!-- sidebar -->
         <aside id="sidebar">
             <div class="sidebar-head d-flex align-items-center justify-content-between">
                 <a href="index.html" class="brand external">
@@ -186,7 +154,6 @@
         </aside>
         <!-- End:: sidebar -->
 
-        <!-- Start:: header [[ Find at scss/framework/header.scss ]] -->
         <header id="header">
             <div class="container">
                 <div class="header-container">
@@ -195,7 +162,6 @@
                             <i class="ri-menu-3-line"></i>
                         </a>
 
-                        <!-- Start:: search form [[ Find at scss/framework/search.scss ]] -->
                         <form action="#" id="search_form" class="me-3">
                             <label for="search_input">
                                 <i class="ri-search-2-line"></i>
@@ -204,7 +170,6 @@
                         </form>
                         <!-- End:: search form -->
 
-                        <!-- Start:: search [[ Find at scss/framework/search.scss ]] -->
                         <div id="search_results" class="search pb-3">
                             <div class="search__head">
                                 <button type="button" class="btn btn-sm btn-light-primary active">Trending</button>
@@ -586,18 +551,13 @@
         </header>
         <!-- End:: header -->
 
-        <!-- Start:: page content [[ Find at scss/framework/wrapper.scss ]] -->
         <main id="page_content">
 
-             <!-- Hero [[ Find at scss/framework/hero.scss ]] -->
             <div class="hero" style="background-image: url(images/banner/event.jpg);"></div>
 
-            <!-- Start:: under hero [[ Find at scss/framework/hero.scss ]] -->
             <div class="under-hero container">
 
-                <!-- Start:: section [[ Find at scss/framework/section.scss ]] -->
                 <div class="section">
-                    <!-- Start:: plan [[ Find at scss/framework/plan.scss ]] -->
                     <div class="plan bg-light">
                         <div class="card plan__info overflow-hidden">
                             <div class="card-body d-flex flex-column p-0">
@@ -674,7 +634,6 @@
             </div>
             <!-- End:: under hero -->
 
-            <!-- Start:: footer [[ Find at scss/framework/footer.scss ]] -->
             <footer id="footer">
                 <div class="container">
                     <div class="text-center mb-4">
@@ -704,7 +663,6 @@
     </div>
     <!-- End:: wrapper -->
 
-    <!-- Start:: player [[ Find at scss/framework/player.scss ]] -->
     <div id="player">
         <div class="container">
             <div class="player-container">
@@ -714,7 +672,6 @@
                     <input type="range" class="amplitude-song-slider player-progress__slider" aria-label="Progress slider">
                 </div>
         
-                <!-- Start:: cover [[ Find at scss/components/cover.scss ]] -->
                 <div class="cover d-flex align-items-center">
                     <div class="cover__image">
                         <div class="ratio ratio-1x1">
@@ -776,7 +733,6 @@
                         </ul>
                     </div>
 
-                    <!-- Start:: playlist [[ Find at scss/framework/playlist.scss ]] -->
                     <div class="playlist dropstart me-3">
                         <button class="btn btn-icon" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-label="Playlist" aria-expanded="false">
                             <i class="ri-play-list-fill fs-5"></i>
@@ -786,7 +742,6 @@
                                 <h6 class="mb-0">Next Lineup</h6>
                                 <a role="button" id="clear_playlist" class="btn btn-link">Clear</a>
                             </div>
-                            <!-- Start:: list [[ Find at scss/components/list.scss ]] -->
                             <div id="playlist" class="list playlist__body" data-scroll="true">
                                 <div class="col-sm-8 col-10 mx-auto mt-5 text-center">
                                     <i class="ri-music-2-line mb-3"></i>
@@ -803,13 +758,12 @@
     </div>
     <!-- End:: player -->
 
-    <!-- Backdrop [[ Find at scss/framework/wrapper.scss ]] -->
     <div id="backdrop"></div>
 
 
     <!-- Scripts -->
-    <script src="js/plugins.bundle.js"></script>
-    <script src="js/scripts.bundle.js"></script>
+    <script src="/ditto/js/plugins.bundle.js"></script>
+    <script src="/ditto/js/scripts.bundle.js"></script>
 
 </body>
 </html>

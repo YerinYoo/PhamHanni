@@ -9,7 +9,6 @@ import com.bunnies.common.constants.Constants;
 
 public class UtilDateTime {
 
-	
 	//현재 시간 불러오기 (지역 별, 기준 시간이 다른 여러 지역에 위치한 서버에서는 사용할 수 없음)
 	public static LocalDateTime nowLocalDateTime() throws Exception {
 		LocalDateTime localDateTime = LocalDateTime.now();
